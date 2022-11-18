@@ -1,8 +1,10 @@
 package com.heeyjinny.fileio
 
 import java.io.BufferedReader
+import java.io.BufferedWriter
 import java.io.File
 import java.io.FileReader
+import java.io.FileWriter
 
 class FileUtil {
 
@@ -56,8 +58,39 @@ class FileUtil {
         buffer.close()
         return result.toString()
 
+    }//readTextFile
 
-    }
+    //2
+    //Writer 계열의 스트림을 사용하여 파일 데이터 쓰기
+    //쓰기파일은 총3개의 파라미터를 사용(파일생성할 디렉터리, 파일명, 작성할내용)
+
+    //2-1
+    //3개의 파라미터를 가진 메서드(writeTextFile()) 생성
+    fun writeTextFile(directory: String, filename: String, content: String){
+
+        //2-2
+        //디렉터리에 생성할 디렉터리 이름인 directory가 존재하는지 검사하고 없으면 생성
+        //파일 기본 정보를 사용하는 File()클래스를 생성하여 사용
+        val dir = File(directory)
+        if (!dir.exists()) {
+            //만약 directory이름의 파일이 존재하지 않는다면
+            //디렉터리 생성 mkdirs()
+            dir.mkdirs()
+        }
+
+        //2-3
+        //생성된 디렉터리(directory)에 파일명(filename)을 합해
+        //FileWriter 파라미터로 생성하여 변수(writer)에 저장
+        //쓰기속도 향상을 위해 BufferedWriter()하여 변수(buffer)에 저장
+        val writer = FileWriter("$directory/$filename")
+        val buffer = BufferedWriter(writer)
+
+        //2-4
+        //변수 buffer로 내용을 쓰고 닫기 close()
+        buffer.write(content)
+        buffer.close()
+
+    }//writeTextFile
 
 
 }//FileUtil
